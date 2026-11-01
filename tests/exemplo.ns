@@ -1,0 +1,164 @@
+// Smoke test dos recursos da linguagem Nebula Script.
+// Compile e execute com: nebula -nbc tests\exemplo.ns; nebula -run tests\exemplo.cns
+// O teste de read() espera que o utilizador digite uma linha no terminal.
+// FFI e bibliotecas externas precisam de uma DLL carregada e ficam fora deste teste.
+
+print("=== Tipos e operadores ===")
+number inteiro = 12
+float decimal = 2.5
+double preciso = 3.75
+bool ativo = true
+string saudacao = "Nebula " + "Script"
+float metadeDecimal = decimal / 2.0
+double somaPrecisa = preciso + decimal
+
+print(inteiro)
+print(decimal)
+print(preciso)
+print(metadeDecimal)
+print(somaPrecisa)
+print(ativo)
+print(saudacao)
+print("strings iguais: " [saudacao == "Nebula Script"])
+print("strings diferentes: " [saudacao != "Nebula"])
+print("aritmetica: " [2 + 3 * 4])
+print("subtracao: " [20 - 7])
+print("divisao: " [20 / 4])
+print("modulo: " [17 % 5])
+print("menos unario: " [-inteiro])
+print("igualdade: " [inteiro == 12])
+print("diferente: " [inteiro != 0])
+print("menor: " [inteiro < 20])
+print("menor ou igual: " [inteiro <= 12])
+print("maior: " [inteiro > 5])
+print("maior ou igual: " [inteiro >= 12])
+print("negacao: " [!ativo])
+print("e logico: " [ativo && (inteiro == 12)])
+print("ou logico: " [ativo || (inteiro == 0)])
+
+// Os lados direitos nao devem executar por causa do curto-circuito.
+bool curtoCircuitoE = false && (1 / 0 == 0)
+bool curtoCircuitoOu = true || (1 / 0 == 0)
+print("curto-circuito &&: " [curtoCircuitoE])
+print("curto-circuito ||: " [curtoCircuitoOu])
+
+print("=== Funcoes ===")
+fn somar(number: a, number: b) -> number {
+    return a + b
+}
+
+fn fatorial(number: valor) -> number {
+    if (valor <= 1) {
+        return 1
+    } else {
+        return valor * fatorial(valor - 1)
+    }
+}
+
+fn anunciar(string: mensagem) {
+    print(mensagem)
+}
+
+fn ehPositivo(number: valor) -> bool {
+    return valor > 0
+}
+
+fn cumprimentar(string: nome) -> string {
+    return "Ola, " + nome
+}
+
+print("somar(8, 4): " [somar(8, 4)])
+print("fatorial(5): " [fatorial(5)])
+print("ehPositivo(4): " [ehPositivo(4)])
+print(cumprimentar("Nebula"))
+anunciar("chamada de funcao sem retorno")
+
+print("=== Condicionais e loops ===")
+number escolha = 2
+if (escolha == 1) {
+    print("ramo if")
+} else {
+    print("ramo else")
+}
+if (ativo) {
+    print("ramo if verdadeiro")
+}
+
+number contadorWhile = 0
+while (contadorWhile < 3) {
+    print("while: " [contadorWhile])
+    contadorWhile = contadorWhile + 1
+}
+
+for (number contadorFor = 0; contadorFor < 3; contadorFor = contadorFor + 1) {
+    print("for: " [contadorFor])
+}
+
+print("=== Arrays ===")
+number[] numeros = [10, 20, 30]
+number[] vazio = []
+string[] nomes = ["Ada", "Linus"]
+float[] coordenadas = [1.5, 2.5]
+bool[] flags = [true, false]
+numeros[1] = 25
+nomes[1] = "Grace"
+print("array: " [numeros])
+print("indice: " [numeros[1]])
+print("length: " [length(numeros)])
+print("array vazio length: " [length(vazio)])
+print("string array: " [nomes])
+print("float array: " [coordenadas])
+print("bool array: " [flags])
+
+number[] aliasNumeros = numeros
+aliasNumeros[0] = 11
+print("array compartilhado: " [numeros[0]])
+print("arrays sao o mesmo valor: " [numeros == aliasNumeros])
+
+fn somarArray(number[]: valores) -> number {
+    number total = 0
+    for (number indice = 0; indice < length(valores); indice = indice + 1) {
+        total = total + valores[indice]
+    }
+    return total
+}
+
+print("soma do array: " [somarArray(numeros)])
+
+print("=== Structs ===")
+struct Ponto {
+    number x
+    number y
+}
+
+struct Jogador {
+    string nome
+    number vida
+    Ponto posicao
+}
+
+fn receberDano(Jogador: jogador, number: dano) -> number {
+    jogador.vida = jogador.vida - dano
+    return jogador.vida
+}
+
+Jogador jogador = Jogador("Nebuloso", 100, Ponto(4, 7))
+print("nome: " [jogador.nome])
+print("posicao x: " [jogador.posicao.x])
+jogador.posicao = Ponto(4, 9)
+print("posicao y: " [jogador.posicao.y])
+print("vida apos dano: " [receberDano(jogador, 15)])
+print("mutacao compartilhada: " [jogador.vida])
+
+Jogador[] jogadores = [jogador, Jogador("Visitante", 80, Ponto(1, 2))]
+print("struct em array: " [jogadores[1].nome])
+print("mesma struct: " [jogador == jogador])
+
+print("=== Entrada e pausa ===")
+print("Digite uma linha para testar read():")
+string entrada = read()
+print("read() recebeu: " [entrada])
+sleep(1)
+print("sleep(1) terminou")
+
+print("=== Testes concluidos ===")

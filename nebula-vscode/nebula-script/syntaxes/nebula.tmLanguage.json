@@ -1,0 +1,36 @@
+{
+  "scopeName": "source.ns",
+  "fileTypes": ["ns"],
+  "patterns": [
+    {
+      "name": "comment.line.double-slash.ns",
+      "match": "//.*$"
+    },
+    {
+      "name": "string.quoted.double.ns",
+      "begin": "\"",
+      "end": "\""
+    },
+    {
+      "name": "constant.numeric.ns",
+      "match": "\\b[0-9]+(\\.[0-9]+)?\\b"
+    },
+    {
+      "name": "keyword.operator.ns",
+      "match": "(==|!=|<=|>=|&&|\\|\\||[+*/%<>=!-])"
+    },
+    {
+      "name": "keyword.control.ns",
+      "match": "\\b(while|for|if|else|return|fn|struct|extern)\\b"
+    },
+    {
+      "name": "storage.type.ns",
+      "match": "\\b(number|float|double|string|bool|handle|void)\\b"
+    },
+    {
+      "name": "constant.language.ns",
+      "match": "\\b(true|false)\\b"
+    }
+  ],
+  "repository": {}
+}

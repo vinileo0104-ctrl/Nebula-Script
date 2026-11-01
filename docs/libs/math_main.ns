@@ -1,0 +1,5 @@
+// main.ns
+use "src/MATH/math.ns"
+
+number resultado = Add(10, 25)
+print("O resultado da soma é: " [resultado]) // ou , resultado

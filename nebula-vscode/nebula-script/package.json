@@ -1,0 +1,25 @@
+{
+  "name": "nebula-script",
+  "displayName": "Nebula Script",
+  "description": "Suporte de linguagem e syntax highlighting para Nebula Script",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.140.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "contributes": {
+    "languages": [{
+      "id": "nebula",
+      "aliases": ["Nebula Script", "nebula"],
+      "extensions": [".ns"],
+      "configuration": "./language-configuration.json"
+    }],
+    "grammars": [{
+      "language": "nebula",
+      "scopeName": "source.ns",
+      "path": "./syntaxes/nebula.tmLanguage.json"
+    }]
+  }
+}

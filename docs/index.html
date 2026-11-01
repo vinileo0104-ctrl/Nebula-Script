@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nebula Script — Documentação Oficial</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0d1117;
+            --bg-secondary: #161b22;
+            --bg-tertiary: #21262d;
+            --border-color: #30363d;
+            --text-primary: #c9d1d9;
+            --text-heading: #f0f6fc;
+            --text-muted: #8b949e;
+            --accent: #7c3aed;
+            --accent-hover: #6d28d9;
+            --accent-glow: rgba(124, 58, 237, 0.25);
+            --code-bg: #0b0e14;
+            --sidebar-width: 280px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            line-height: 1.6;
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar Navigation */
+        aside.sidebar {
+            width: var(--sidebar-width);
+            background-color: var(--bg-secondary);
+            border-right: 1px solid var(--border-color);
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            overflow-y: auto;
+            padding: 2rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            z-index: 10;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-heading);
+            text-decoration: none;
+        }
+
+        .brand-logo {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 12px var(--accent-glow);
+        }
+
+        .nav-group-title {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        .nav-links a {
+            color: var(--text-primary);
+            text-decoration: none;
+            padding: 0.5rem 0.75rem;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+            display: block;
+        }
+
+        .nav-links a:hover {
+            background-color: var(--bg-tertiary);
+            color: var(--text-heading);
+        }
+
+        .nav-links a.active {
+            background-color: var(--accent-glow);
+            color: #c084fc;
+            font-weight: 500;
+            border-left: 3px solid var(--accent);
+        }
+
+        /* Main Content */
+        main.content {
+            margin-left: var(--sidebar-width);
+            flex: 1;
+            max-width: 960px;
+            padding: 3rem 4rem;
+        }
+
+        header.hero {
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 2.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .hero h1 {
+            font-size: 2.75rem;
+            font-weight: 800;
+            color: var(--text-heading);
+            margin-bottom: 1rem;
+            letter-spacing: -0.02em;
+        }
+
+        .hero p {
+            font-size: 1.15rem;
+            color: var(--text-muted);
+            max-width: 680px;
+            margin-bottom: 2rem;
+        }
+
+        .cta-group {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .btn-download {
+            background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+            color: white;
+            padding: 0.85rem 1.75rem;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            box-shadow: 0 4px 14px var(--accent-glow);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .btn-download:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(124, 58, 237, 0.4);
+        }
+
+        .badge-github {
+            background-color: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            color: var(--text-muted);
+            padding: 0.6rem 1.25rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Documentation Sections */
+        section {
+            margin-bottom: 3.5rem;
+            scroll-margin-top: 2rem;
+        }
+
+        h2 {
+            font-size: 1.75rem;
+            color: var(--text-heading);
+            margin-bottom: 1.25rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        h3 {
+            font-size: 1.25rem;
+            color: var(--text-heading);
+            margin: 1.75rem 0 0.75rem 0;
+        }
+
+        p {
+            margin-bottom: 1rem;
+        }
+
+        ul, ol {
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        li {
+            margin-bottom: 0.4rem;
+        }
+
+        /* Code Blocks */
+        pre {
+            background-color: var(--code-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.25rem;
+            overflow-x: auto;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9rem;
+            margin: 1rem 0 1.5rem 0;
+            color: #e6edf3;
+        }
+
+        code {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.875em;
+            background-color: var(--bg-tertiary);
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            color: #f472b6;
+        }
+
+        pre code {
+            background-color: transparent;
+            padding: 0;
+            color: inherit;
+        }
+
+        /* Syntax Highlight Colors */
+        .kw { color: #f472b6; font-weight: 600; }
+        .str { color: #a5d6ff; }
+        .num { color: #7ee787; }
+        .cmt { color: #8b949e; font-style: italic; }
+        .fn { color: #d2a8ff; }
+        .type { color: #ff7b72; }
+
+        /* Command Line Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            background-color: var(--bg-secondary);
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+        }
+
+        th, td {
+            padding: 0.85rem 1.25rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        th {
+            background-color: var(--bg-tertiary);
+            color: var(--text-heading);
+            font-weight: 600;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .alert {
+            background-color: rgba(99, 102, 241, 0.1);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            border-radius: 8px;
+            padding: 1rem 1.25rem;
+            margin: 1.5rem 0;
+            display: flex;
+            gap: 0.75rem;
+            align-items: flex-start;
+        }
+
+        .alert-icon {
+            font-size: 1.25rem;
+        }
+
+        footer {
+            margin-top: 5rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-muted);
+            font-size: 0.875rem;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <a href="#" class="brand">
+            <div class="brand-logo">N</div>
+            <span>Nebula Script</span>
+        </a>
+
+        <nav>
+            <div class="nav-group-title">Introdução</div>
+            <ul class="nav-links">
+                <li><a href="#sobre" class="active">Sobre a Linguagem</a></li>
+                <li><a href="#logo">Identidade & Logotipo</a></li>
+                <li><a href="#instalacao">Guia de Instalação</a></li>
+            </ul>
+
+            <div class="nav-group-title" style="margin-top: 1.5rem;">CLI & Ferramentas</div>
+            <ul class="nav-links">
+                <li><a href="#cli">Comandos CLI</a></li>
+                <li><a href="#build-standalone">Executável Autónomo</a></li>
+            </ul>
+
+            <div class="nav-group-title" style="margin-top: 1.5rem;">Sintaxe & Manual</div>
+            <ul class="nav-links">
+                <li><a href="#tipos">Tipos de Dados</a></li>
+                <li><a href="#variaveis">Variáveis & Atribuição</a></li>
+                <li><a href="#funcoes">Declaração de Funções</a></li>
+                <li><a href="#structs">Structs</a></li>
+                <li><a href="#modulos">Módulos com `use`</a></li>
+                <li><a href="#fluxo">Estruturas de Controlo</a></li>
+                <li><a href="#io">Funções Nativas & Print</a></li>
+            </ul>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="content">
+        <header class="hero">
+            <h1>Nebula Script</h1>
+            <p>Uma linguagem de script moderna, fortemente tipada e compilada para bytecode, construída do zero em C++17 com suporte a módulos e binários autónomos.</p>
+            
+            <div class="cta-group">
+                <a href="install.exe" download class="btn-download">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                    Baixar Instalador (install.exe)
+                </a>
+
+                <div class="badge-github">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+                    Código fonte disponível em breve no GitHub
+                </div>
+            </div>
+        </header>
+
+        <!-- Sobre -->
+        <section id="sobre">
+            <h2>Sobre a Linguagem</h2>
+            <p>O <strong>Nebula Script</strong> é uma linguagem desenvolvida para oferecer rapidez, segurança sintática e facilidade na execução de scripts. Ela combina a facilidade de escrita de linguagens como Lua e Python com a segurança de um analisador sintático estático e um gerador de bytecode de alto desempenho executado em máquina virtual (VM).</p>
+        </section>
+
+        <!-- Logo Showcase -->
+        <section id="logo">
+            <h2>Identidade Visual & Logotipo SVG</h2>
+            <p>O logotipo oficial da linguagem combina a nébula cósmica (brilho ciano e violeta) com a estrutura tipada e os símbolos de código (chaves <code>{ }</code> e a letra <code>N</code> estilizada em órbita vetorizada).</p>
+
+            <div style="background-color: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 2rem; margin: 1.5rem 0; display: flex; flex-direction: column; align-items: center; gap: 2rem;">
+                <!-- Main Preview (512x512 visual space) -->
+                <div style="width: 260px; height: 260px; filter: drop-shadow(0 0 25px rgba(168, 85, 247, 0.35));">
+                    <svg id="nebula-logo-svg" viewBox="0 0 512 512" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <!-- Gradients -->
+                            <radialGradient id="nebulaGlow" cx="50%" cy="50%" r="50%">
+                                <stop offset="0%" stop-color="#a855f7" stop-opacity="0.6"/>
+                                <stop offset="50%" stop-color="#3b82f6" stop-opacity="0.2"/>
+                                <stop offset="100%" stop-color="#0d1117" stop-opacity="0"/>
+                            </radialGradient>
+                            
+                            <linearGradient id="orbitGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#22d3ee"/>
+                                <stop offset="50%" stop-color="#a855f7"/>
+                                <stop offset="100%" stop-color="#ec4899"/>
+                            </linearGradient>
+
+                            <linearGradient id="nPathGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#ffffff"/>
+                                <stop offset="100%" stop-color="#c084fc"/>
+                            </linearGradient>
+
+                            <filter id="glowEffect" x="-20%" y="-20%" width="140%" height="140%">
+                                <feGaussianBlur stdDeviation="8" result="blur" />
+                                <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+                            </filter>
+                        </defs>
+
+                        <!-- Background Glow & Stars -->
+                        <rect width="512" height="512" rx="100" fill="#0b0e14"/>
+                        <circle cx="256" cy="256" r="220" fill="url(#nebulaGlow)"/>
+                        
+                        <!-- Constellation Stars -->
+                        <circle cx="120" cy="140" r="3" fill="#67e8f9" opacity="0.8"/>
+                        <circle cx="390" cy="110" r="2" fill="#f472b6" opacity="0.9"/>
+                        <circle cx="410" cy="380" r="3" fill="#a855f7" opacity="0.7"/>
+                        <circle cx="100" cy="360" r="2.5" fill="#38bdf8" opacity="0.8"/>
+
+                        <!-- Outer Orbital Nebula Ring -->
+                        <path d="M 120 256 C 120 130, 392 130, 392 256 C 392 382, 120 382, 120 256 Z" 
+                              fill="none" stroke="url(#orbitGrad)" stroke-width="12" stroke-linecap="round" 
+                              stroke-dasharray="600 120" transform="rotate(-28 256 256)" filter="url(#glowEffect)"/>
+
+                        <!-- Code Brackets { } in Background -->
+                        <text x="75" y="280" fill="#38bdf8" font-family="'Fira Code', monospace" font-size="110" font-weight="bold" opacity="0.3">{</text>
+                        <text x="375" y="280" fill="#ec4899" font-family="'Fira Code', monospace" font-size="110" font-weight="bold" opacity="0.3">}</text>
+
+                        <!-- Stylized Modern 'N' Vector -->
+                        <path d="M 170 360 L 170 152 C 170 152, 225 152, 256 215 L 342 360 L 342 152" 
+                              fill="none" stroke="url(#nPathGrad)" stroke-width="38" stroke-linecap="round" stroke-linejoin="round"/>
+                        
+                        <!-- Core Star Sparkle -->
+                        <polygon points="256,120 262,138 280,144 262,150 256,168 250,150 232,144 250,138" fill="#22d3ee" filter="url(#glowEffect)"/>
+                    </svg>
+                </div>
+
+                <!-- Size Variations -->
+                <div style="display: flex; gap: 3rem; align-items: center; justify-content: center; width: 100%; border-top: 1px solid var(--border-color); padding-top: 1.5rem;">
+                    <div style="text-align: center;">
+                        <div style="width: 32px; height: 32px; margin: 0 auto 0.5rem auto;">
+                            <svg viewBox="0 0 512 512" width="100%" height="100%"><use href="#nebula-logo-svg"/></svg>
+                        </div>
+                        <span style="font-size: 0.75rem; color: var(--text-muted);">Favicon (32x32)</span>
+                    </div>
+
+                    <div style="text-align: center;">
+                        <div style="width: 64px; height: 64px; margin: 0 auto 0.5rem auto;">
+                            <svg viewBox="0 0 512 512" width="100%" height="100%"><use href="#nebula-logo-svg"/></svg>
+                        </div>
+                        <span style="font-size: 0.75rem; color: var(--text-muted);">App Icon (64x64)</span>
+                    </div>
+
+                    <div style="text-align: center;">
+                        <div style="width: 128px; height: 128px; margin: 0 auto 0.5rem auto;">
+                            <svg viewBox="0 0 512 512" width="100%" height="100%"><use href="#nebula-logo-svg"/></svg>
+                        </div>
+                        <span style="font-size: 0.75rem; color: var(--text-muted);">HD Icon (128x128)</span>
+                    </div>
+                </div>
+
+                <!-- Copy SVG Action -->
+                <button id="copy-svg-btn" onclick="copySvgToClipboard()" class="badge-github" style="cursor: pointer; font-weight: 600; color: var(--text-heading); border-color: var(--accent);">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    Copiar Código SVG do Logotipo
+                </button>
+            </div>
+        </section>
+
+        <!-- Instalação -->
+        <section id="instalacao">
+            <h2>Guia de Instalação</h2>
+            <p>A instalação do Nebula Script no Windows é automatizada através do instalador compresso compilado em C++.</p>
+            
+            <ol>
+                <li>Faça o download do ficheiro <code>install.exe</code> clicando no botão no topo da página.</li>
+                <li>Clique com o botão direito sobre o <code>install.exe</code> e selecione <strong>Executar como Administrador</strong>.</li>
+                <li>O instalador irá:
+                    <ul>
+                        <li>Criar o diretório seguro em <code>C:\Program Files\NebulaScript</code>.</li>
+                        <li>Copiar o compilador (<code>nebula.exe</code>) e o stub (<code>stub.exe</code>).</li>
+                        <li>Adicionar o caminho ao <strong>PATH</strong> do sistema sem truncar variáveis existentes.</li>
+                        <li>Associar as extensões de ficheiro <code>.ns</code> e <code>.cns</code> no Registro do Windows.</li>
+                    </ul>
+                </li>
+            </ol>
+
+            <div class="alert">
+                <span class="alert-icon">💡</span>
+                <div>Após a instalação, reinicie a sua linha de comandos (CMD / PowerShell) ou VS Code para utilizar o comando <code>nebula</code> globalmente.</div>
+            </div>
+        </section>
+
+        <!-- CLI -->
+        <section id="cli">
+            <h2>Comandos da CLI</h2>
+            <p>O executável da CLI (<code>nebula</code>) oferece ferramentas integradas de verificação, compilação e execução:</p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Comando</th>
+                        <th>Descrição</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>nebula -check &lt;script.ns&gt;</code></td>
+                        <td>Analisa o ficheiro em busca de erros de sintaxe e tipos sem gerar código.</td>
+                    </tr>
+                    <tr>
+                        <td><code>nebula -nbc &lt;main.ns&gt; [-o &lt;saida.cns&gt;]</code></td>
+                        <td>Compila o ficheiro de entrada e os seus módulos para bytecode; <code>-o</code> define o caminho e o nome do ficheiro gerado.</td>
+                    </tr>
+                    <tr>
+                        <td><code>nebula -run &lt;ficheiro.cns&gt;</code></td>
+                        <td>Executa um ficheiro de bytecode binário previamente compilado na VM Nebula.</td>
+                    </tr>
+                    <tr>
+                        <td><code>nebula -build &lt;main.ns&gt; [-o &lt;saida.exe&gt;]</code></td>
+                        <td>Gera um executável autónomo; <code>-o</code> define o caminho e o nome do ficheiro. Ao abrir por duplo clique, a janela aguarda Enter após a execução.</td>
+                    </tr>
+                    <tr>
+                        <td><code>nebula -version</code></td>
+                        <td>Exibe a versão atual do compilador e o número do build.</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p>A biblioteca <code>nebula.dll</code> expõe uma API C para hosts C/C++ através de <code>src/common/NebulaApi.h</code>: <code>nebula_check_syntax</code> valida um fonte, <code>nebula_compile</code> gera bytecode (caminho de saída vazio usa o nome do fonte com extensão <code>.cns</code>) e <code>nebula_run_bytecode</code> executa um bytecode. As funções retornam <code>0</code> em caso de sucesso e um valor diferente de zero em caso de falha.</p>
+        </section>
+
+        <!-- Sintaxe - Tipos -->
+        <section id="tipos">
+            <h2>Tipos de Dados</h2>
+            <p>O Nebula Script suporta tipos primitivos e tipos de interoperabilidade:</p>
+            <ul>
+                <li><code>number</code>: Números inteiros (ex: <code>10</code>, <code>-42</code>).</li>
+                <li><code>float</code> e <code>double</code>: Números de ponto flutuante (ex: <code>3.14</code>, <code>0.001</code>); em funções externas correspondem a C <code>float</code> e <code>double</code>.</li>
+                <li><code>string</code>: Cadeias de texto delimitadas por aspas duplas (ex: <code>"Nebula"</code>).</li>
+                <li><code>bool</code>: Valores lógicos (<code>true</code> ou <code>false</code>).</li>
+                <li><code>handle</code>: Ponteiro opaco recebido ou devolvido por funções externas.</li>
+            </ul>
+        </section>
+
+        <!-- Sintaxe - Variáveis -->
+        <section id="variaveis">
+            <h2>Variáveis & Atribuição</h2>
+            <p>A declaração de variáveis exige a especificação do tipo base seguida do nome da variável e o seu valor inicial:</p>
+
+<pre><code><span class="cmt">// Declaração de variáveis</span>
+<span class="type">number</span> total = <span class="num">100</span>
+<span class="type">float</span> pi = <span class="num">3.14159</span>
+<span class="type">string</span> nome = <span class="str">"Nebula Script"</span>
+<span class="type">bool</span> ativo = <span class="kw">true</span>
+
+<span class="cmt">// Reatribuição de variáveis existentes</span>
+total = <span class="num">250</span>
+</code></pre>
+        </section>
+
+        <!-- Sintaxe - Funções -->
+        <section id="funcoes">
+            <h2>Declaração de Funções</h2>
+            <p>As funções utilizam a palavra-chave <code>fn</code>, parâmetros tipados com a sintaxe <code>tipo: nome</code> e um tipo de retorno explícito indicado por <code>-></code>:</p>
+
+<pre><code><span class="kw">fn</span> <span class="fn">CalcularArea</span>(<span class="type">number</span>: largura, <span class="type">number</span>: altura) -> <span class="type">number</span> {
+    <span class="kw">return</span> largura * altura
+}
+
+<span class="type">number</span> area = <span class="fn">CalcularArea</span>(<span class="num">10</span>, <span class="num">5</span>)
+</code></pre>
+        </section>
+
+        <!-- Structs -->
+        <section id="structs">
+            <h2>Structs</h2>
+            <p>Use <code>struct</code> para agrupar campos relacionados. Crie um valor passando os campos na ordem da declaração e acesse ou altere-os com ponto:</p>
+
+<pre><code><span class="kw">struct</span> <span class="fn">Pessoa</span> {
+    <span class="type">string</span> nome
+    <span class="type">number</span> idade
+}
+
+<span class="fn">Pessoa</span> pessoa = <span class="fn">Pessoa</span>(<span class="str">"Ana"</span>, <span class="num">20</span>)
+pessoa.idade = pessoa.idade + <span class="num">1</span>
+<span class="fn">print</span>(pessoa.nome)
+<span class="fn">print</span>(pessoa.idade)
+</code></pre>
+            <p>Os campos têm tipos explícitos e a verificação de tipos confere a quantidade e os tipos dos valores passados ao criar a struct.</p>
+        </section>
+
+        <!-- Sintaxe - Módulos -->
+        <section id="modulos">
+            <h2>Módulos com `use`</h2>
+            <p>O Nebula Script suporta a modularização de código utilizando a diretiva <code>use</code>. Os ficheiros são importados uma única vez, prevenindo definições circulares ou duplicações no escopo global:</p>
+
+<pre><code><span class="cmt">// arquivo: matematica.ns</span>
+<span class="kw">fn</span> <span class="fn">Somar</span>(<span class="type">number</span>: a, <span class="type">number</span>: b) -> <span class="type">number</span> {
+    <span class="kw">return</span> a + b
+}
+</code></pre>
+
+<pre><code><span class="cmt">// arquivo: main.ns</span>
+<span class="kw">use</span> <span class="str">"matematica.ns"</span>
+
+<span class="type">number</span> resultado = <span class="fn">Somar</span>(<span class="num">15</span>, <span class="num">20</span>)
+<span class="fn">print</span>(<span class="str">"O resultado da soma é: "</span> [resultado])
+</code></pre>
+            <p>Também é possível importar uma DLL nativa do Windows com <code>use "biblioteca.dll"</code>. Os caminhos relativos são resolvidos a partir da pasta do bytecode ou do executável empacotado. Declare cada função exportada antes de chamá-la:</p>
+            <p>Para chamar qualquer exportação com uma assinatura conhecida, declare a função com <code>extern fn</code>. As DLLs devem exportar funções C (por exemplo, com <code>extern "C" __declspec(dllexport)</code>); a convenção suportada é C:</p>
+
+<pre><code><span class="kw">use</span> <span class="str">"biblioteca.dll"</span>
+
+<span class="cmt">// int32_t somar(int32_t, int32_t)</span>
+<span class="fn">extern</span> <span class="kw">fn</span> <span class="fn">somar</span>(<span class="type">number</span>: a, <span class="type">number</span>: b) -> <span class="type">number</span>
+
+<span class="cmt">// double calcular(double, const char*)</span>
+<span class="fn">extern</span> <span class="kw">fn</span> <span class="fn">calcular</span>(<span class="type">double</span>: valor, <span class="type">string</span>: nome) -> <span class="type">double</span>
+
+<span class="cmt">// void registrar(const char*)</span>
+<span class="fn">extern</span> <span class="kw">fn</span> <span class="fn">registrar</span>(<span class="type">string</span>: mensagem) -> void
+
+<span class="type">number</span> total = <span class="fn">somar</span>(<span class="num">10</span>, <span class="num">32</span>)
+<span class="fn">registrar</span>(<span class="str">"chamada concluída"</span>)
+</code></pre>
+            <p>Os tipos FFI são <code>number</code> (int32), <code>float</code> (C float), <code>double</code> (C double), <code>bool</code> (bool C), <code>string</code> (const char*) e <code>handle</code> (void*); o retorno também pode ser <code>void</code>. A assinatura precisa corresponder exatamente à exportação, que deve usar a convenção C/cdecl. As funções são procuradas nas DLLs importadas, da última para a primeira; os nomes precisam estar exportados sem decoração C++. Strings passadas à DLL são válidas durante a chamada. Para compilar o Nebula no MSYS2 UCRT64, instale a dependência de build com <code>pacman -S mingw-w64-ucrt-x86_64-libffi</code>.</p>
+        </section>
+
+        <!-- Sintaxe - Arrays & Operadores -->
+        <section id="arrays-operadores">
+            <h2>Arrays & Operadores</h2>
+            <p>Arrays são homogéneos e unidimensionais. Declare o tipo dos elementos, consulte o tamanho com <code>length</code>, leia pelo índice a partir de zero e altere elementos:</p>
+
+<pre><code><span class="type">number</span>[] tokens = [<span class="num">10</span>, <span class="num">20</span>, <span class="num">30</span>]
+tokens[<span class="num">1</span>] = <span class="num">42</span>
+<span class="type">number</span> quantidade = <span class="fn">length</span>(tokens)
+<span class="fn">print</span>(tokens[<span class="num">1</span>])
+</code></pre>
+            <p>Arrays vazios também exigem tipo explícito, por exemplo <code>string[] nomes = []</code>. Um índice inválido ou fora dos limites encerra a execução com erro.</p>
+            <p>Os operadores seguem precedência convencional: <code>!</code> e menos unário; <code>*</code>, <code>/</code>, <code>%</code>; <code>+</code>, <code>-</code>; comparações (<code>&lt;</code>, <code>&lt;=</code>, <code>&gt;</code>, <code>&gt;=</code>); igualdade (<code>==</code>, <code>!=</code>); <code>&amp;&amp;</code>; e <code>||</code>. Os operadores lógicos avaliam com curto-circuito.</p>
+        </section>
+
+        <!-- Sintaxe - Fluxo -->
+        <section id="fluxo">
+            <h2>Estruturas de Controlo</h2>
+            <p>Controle o fluxo de execução utilizando expressões condicionais <code>if/else</code> e repetições com <code>while</code> ou <code>for</code>:</p>
+
+<pre><code><span class="type">number</span> contador = <span class="num">0</span>
+
+<span class="kw">while</span> (contador &lt; <span class="num">5</span>) {
+    <span class="kw">if</span> (contador == <span class="num">3</span>) {
+        <span class="fn">print</span>(<span class="str">"Atingiu o número três!"</span>)
+    } <span class="kw">else</span> {
+        <span class="fn">print</span>(<span class="str">"Contador em progresso..."</span>)
+    }
+    contador = contador + <span class="num">1</span>
+}
+</code></pre>
+
+            <p>O <code>for</code> usa inicialização, condição e incremento separados por ponto e vírgula:</p>
+
+<pre><code><span class="kw">for</span> (<span class="type">number</span> i = <span class="num">0</span>; i &lt; <span class="num">5</span>; i = i + <span class="num">1</span>) {
+    <span class="fn">print</span>(i)
+}
+</code></pre>
+        </section>
+
+        <!-- Sintaxe - IO & Sleep -->
+        <section id="io">
+            <h2>Funções Nativas & Print</h2>
+            <p>A linguagem inclui suporte nativo para saída de dados com interpolação e suspensão de execução. <code>sleep</code> recebe um número inteiro não negativo de milissegundos:</p>
+
+<pre><code><span class="type">number</span> pontos = <span class="num">500</span>
+
+<span class="cmt">// Print com interpolação de variáveis usando colchetes [var]</span>
+<span class="fn">print</span>(<span class="str">"Pontuação atual do jogador: "</span> [pontos])
+
+<span class="cmt">// Pausa a execução por 1000 milissegundos (1 segundo)</span>
+<span class="fn">sleep</span>(<span class="num">1000</span>)
+</code></pre>
+        </section>
+
+        <footer>
+            <p>&copy; 2026 Nebula Script Project. Todos os direitos reservados.</p>
+        </footer>
+    </main>
+
+    <script>
+        // Função para copiar o SVG vetorizado para a área de transferência
+        function copySvgToClipboard() {
+            const svgElement = document.getElementById('nebula-logo-svg');
+            const btn = document.getElementById('copy-svg-btn');
+            
+            if (svgElement) {
+                const svgString = svgElement.outerHTML;
+                
+                // Método seguro de cópia
+                const textarea = document.createElement('textarea');
+                textarea.value = svgString;
+                document.body.appendChild(textarea);
+                textarea.select();
+                try {
+                    document.execCommand('copy');
+                    const originalText = btn.innerHTML;
+                    btn.innerHTML = '✨ Código SVG Copiado!';
+                    btn.style.borderColor = '#7ee787';
+                    setTimeout(() => {
+                        btn.innerHTML = originalText;
+                        btn.style.borderColor = 'var(--accent)';
+                    }, 2500);
+                } catch (err) {
+                    console.error('Erro ao copiar SVG:', err);
+                }
+                document.body.removeChild(textarea);
+            }
+        }
+
+        // Injeta o SVG no minilogo da Sidebar dinamicamente
+        document.addEventListener('DOMContentLoaded', () => {
+            const brandLogo = document.querySelector('.brand-logo');
+            const svgElem = document.getElementById('nebula-logo-svg');
+            if (brandLogo && svgElem) {
+                brandLogo.innerHTML = `<svg viewBox="0 0 512 512" width="100%" height="100%">${svgElem.innerHTML}</svg>`;
+                brandLogo.style.background = 'transparent';
+            }
+        });
+    </script>
+</body>
+</html>

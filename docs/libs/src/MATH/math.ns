@@ -1,0 +1,17 @@
+// © 2026 Nebula Script Project. All rights reserved.
+fn Add(number: a, number: b) -> number {
+    return a + b
+}
+fn Subtract(number: a, number: b) -> number {
+    return a - b
+}
+fn Multiply(number: a, number: b) -> number {
+    return a * b
+}
+// Novas funções utilitárias com o operador %
+fn Modulo(number: a, number: b) -> number {
+    return a % b
+}
+fn IsEven(number: n) -> bool {
+    return (n % 2) == 0
+}

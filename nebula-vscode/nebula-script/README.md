@@ -1,0 +1,1 @@
+# Nebula Script\nExtensão para suporte à linguagem Nebula Script.

@@ -1,0 +1,24 @@
+# Compiled binaries and libraries
+*.exe
+*.dll
+*.a
+*.lib
+*.cns
+*.o
+*.obj
+*.pdb
+*.ilk
+
+# Temporary build output
+*_temp.cns
+*.tmp.cns
+*.tmp
+
+# Editor and operating-system files
+.vs/
+.idea/
+/.vscode/
+**/node_modules/
+**/out/
+Thumbs.db
+.DS_Store
